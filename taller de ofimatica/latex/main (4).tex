@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+
+%importamos los paquetes
+\usepackage[utf8]{inputenc} %Configura caracteres especiales
+\usepackage[spanish]{babel} %Configura en español los valores predet.
+\usepackage{amsmath} %Para el manejo de formulas
+\usepackage{array} %Mejor manejo de las tablas
+\usepackage{geometry} %Margenes
+\geometry{margin=2.5cm} %Modifica el margen de la hoja
+
+\newcommand{\minombre}{brandon alexis avalos santillan}
+\newcommand{\nombrepractica}{Practica 4: Tablas, entornos y comandos}
+\newcommand{\universidad}{UASLP-FEPZM}
+
+\newenvironment{ejercicio}
+{
+ \vspace{0.3cm}
+\noindent\textbf{Ejercicio:}
+\begin{itshape} %Modifica a italika el texto del ejercicio
+}
+{
+   \end{itshape}
+\vspace{0.3cm}
+}
+
+\begin{document}
+\begin{center}
+    {\LARGE \nombrepractica}\\[0.3cm]
+\vspace{10cm}
+{\Large  \minombre}\\
+\vspace{10cm}
+\universidad\\
+{\large \today}
+\end{center}
+
+\section{Introduccion}
+En esta practica aprenderemos a crear tablas y a usar \textbf{environments}, incluyendo environments personalizados
+
+\section{Uso de Tablas}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c}
+         %\hline
+         Alumno&Materia&Calificacion  \\ 
+         \hline
+         Pedro&Matematicas&8\\
+         Maria&Español&10\\
+    \end{tabular}
+    \caption{Calificaciones de alumnos}
+    \label{Calificaciones}
+\end{table}
+\subsection{Tablas con columnas combinadas}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c}
+    \hline
+    \multicolumn{3}{|c|}{Horario}\\ \hline
+    Dia&Hora&Materia\\ \hline
+    Lunes&10 a 11&Matematicas\\ \hline
+    Martes&12 a 13&Fisica\\ \hline
+    
+    \end{tabular}
+    \caption{Horario}
+    \label{Horarario}
+
+\section{Environment Personalizado}
+Ahora usaremos nuestro \textbf{environment}
+
+\begin{ejercicio}
+    Crear una tabla con almenos 4 filas y 3 columnas, rellenala con contenido afin a un tema en especifico
+\end{ejercicio}
+
+
+
+\end{table}
+
+\end{document}

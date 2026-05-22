@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+
+% --- Paquetes Esenciales ---
+\usepackage[utf8]{inputenc}    % Caracteres en español
+\usepackage[spanish]{babel}   % Idioma español
+\usepackage{amsmath}          % Fórmulas matemáticas
+\usepackage{geometry}         % Ajuste de márgenes
+\geometry{letterpaper, margin=1in}
+
+% --- Paquete para Circuitos ---
+\usepackage[siunitx, american]{circuitikz}
+
+\begin{document}
+
+\section{Ejercicio de realizar un circuito}
+
+\begin{center}
+\begin{circuitikz}[scale=1.4]
+    % --- LINEAS PRINCIPALES DEL BUS (SUPERIOR E INFERIOR) ---
+    \draw (0,4) -- (6,4);
+    \draw (0,0) -- (6,0);
+    
+    % --- RAMA 1: FUENTE DE VOLTAJE DC (12V) ---
+    \draw (0,0) to[battery, l=$12\text{V}$] (0,4);
+    % Signos de polaridad manuales para asegurar que salgan bien
+    \node at (0.3, 2.3) {$+$};
+    \node at (0.3, 1.7) {$-$};
+          
+    % --- RAMA 2: RESISTENCIA R1 ---
+    \draw (2,4) to[R] (2,0);
+    % Etiquetas al lado de R1
+    \node[right] at (2, 2.2) {$R_1 = 2\,\Omega$};
+    \node[right] at (2, 2.5) {$V_1$};
+    \node[left] at (2, 1.2) {$I_1$};
+          
+    % --- RAMA 3: RESISTENCIA R2 ---
+    \draw (4,4) to[R] (4,0);
+    % Etiquetas al lado de R2
+    \node[right] at (4, 2.2) {$R_2 = 7\,\Omega$};
+    \node[right] at (4, 2.5) {$V_2$};
+    \node[left] at (4, 1.2) {$I_2$};
+          
+    % --- RAMA 4: RESISTENCIA R3 ---
+    \draw (6,4) to[R] (6,0);
+    % Etiquetas al lado de R3
+    \node[right] at (6, 2.2) {$R_3 = 4\,\Omega$};
+    \node[right] at (6, 2.5) {$V_3$};
+    \node[left] at (6, 1.2) {$I_3$};
+
+\end{circuitikz}
+\end{center}
+
+\end{document}

@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+
+% --- Paquetes Esenciales ---
+\usepackage[utf8]{inputenc}    % Soporte para caracteres en español
+\usepackage[spanish]{babel}   % Idioma español (títulos como Figura, Resumen, etc.)
+\usepackage{graphicx}         % Para insertar imágenes
+\usepackage{amsmath}          % Paquete matemático avanzado
+\usepackage{geometry}         % Configuración de márgenes estándar
+\geometry{letterpaper, margin=1in}
+
+% --- Datos del Documento ---
+\title{Práctica en \LaTeX}
+\author{Brandon Alexis Avalos Santillán}
+\date{11 de febrero de 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+\LaTeX{} es una herramienta utilizada para la elaboración de documentos técnicos y científicos. En la ingeniería mecatrónica se usa frecuentemente para reportes, artículos y documentación de proyectos.
+
+\section{¿Por qué usar \LaTeX?}
+Algunas ventajas de \LaTeX{} son:
+\begin{itemize}
+    \item Excelente manejo de ecuaciones.
+    \item Documentos con formato profesional.
+    \item Ideal para trabajos de ingeniería.
+\end{itemize}
+
+\section{Ejemplo de ecuación}
+Una ecuación común en mecatrónica es la segunda ley de Newton:
+\begin{equation}
+F = m \cdot a
+\end{equation}
+
+Otra ecuación utilizada es la ley de Ohm, la cual relaciona la corriente con el voltaje y la resistencia en un circuito eléctrico:
+\begin{equation}
+I = \frac{V}{R}
+\end{equation}
+
+Donde $I$ es la corriente eléctrica, $V$ es el voltaje y $R$ es la resistencia. Se miden en amperios (A), voltios (V) y ohmios ($\Omega$).
+
+\section{Uso de imágenes}
+Para importar imágenes en \LaTeX, asegúrate de subir el archivo al proyecto de Overleaf.
+
+\begin{figure}[h]
+    \centering
+    % Nota: Asegúrate de tener una imagen llamada "i1.jpg" o con otra extensión válida en tu proyecto de Overleaf
+    \includegraphics[width=0.5\textwidth]{i1.jpg} 
+    \caption{Imagen 1}
+    \label{fig:imagen1}
+\end{figure}
+
+\section{Conclusión}
+\LaTeX{} es una herramienta poderosa que nos ayuda a presentar nuestros trabajos de forma clara y profesional.
+
+\end{document}

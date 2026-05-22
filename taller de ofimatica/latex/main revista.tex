@@ -1,0 +1,433 @@
+\documentclass[10pt,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[letterpaper, left=2cm, right=1.5cm, top=2cm, bottom=2cm]{geometry} 
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{changepage} 
+
+% --- CONFIGURACIÓN DE PÁGINA ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE,LO]{\small \textit{Ingeniería Mecatrónica | Revista UAMZM}}
+\fancyfoot[C]{\small \textbf{UASLP} | Innovación y Resiliencia}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\definecolor{azulUASLP}{HTML}{002F5D}
+
+% --- COMANDO BARRA LATERAL ---
+\newcommand{\barraLateral}{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north west, inner sep=0] at (current page.north west) {
+            \includegraphics[width=7.5cm, height=\paperheight]{imagenes/Portada mecatrónica .png}
+        };
+    \end{tikzpicture}
+}
+
+\begin{document}
+
+% --- PORTADA (PÁG 0) ---
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[inner sep=0] at (current page.center) {
+            \includegraphics[width=\paperwidth, height=\paperheight]{imagenes/Portada mecatrónica .png}
+        };
+    \end{tikzpicture}
+    \centering
+    \vspace*{1cm}
+    {\fontsize{45}{55}\selectfont \textbf{\textcolor{white}{Automatización}}} \\[1.0cm]
+{\fontsize{36}{44}\selectfont \textbf{\textcolor{white}{Mecatrónica}}} \\[1.0cm]
+{\fontsize{31}{38}\selectfont \textbf{\textcolor{white}{Digitalización}}} \\[0.9cm]
+{\fontsize{27}{32}\selectfont \textbf{\textcolor{white}{Sistemas}}} \\[0.8cm]
+{\fontsize{20}{26}\selectfont \textbf{\textcolor{white}{Control}}} \\[0.7cm]
+{\fontsize{16}{22}\selectfont \textbf{\textcolor{white}{Robótica}}} \\[0.6cm]
+{\fontsize{13}{18}\selectfont \textbf{\textcolor{white}{Diseño}}} \\[0.5cm]
+{\fontsize{11}{15}\selectfont \textbf{\textcolor{white}{Lógica}}} \\[0.4cm]
+{\fontsize{9}{12}\selectfont \textbf{\textcolor{white}{Fuerza}}} \\[0.3cm]
+{\fontsize{7}{10}\selectfont \textbf{\textcolor{white}{I+D}}}
+    \vfill
+    {\textcolor{white}{\large \textbf{UASLP - Unidad Zona Media}}}
+\end{titlepage}
+
+% --- ENTORNO DE CONTENIDO DESPLAZADO ---
+\begin{adjustwidth}{6.5cm}{0cm}
+
+% PÁGINA 1
+%\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} La Convergencia de la IA y los Sistemas Embebidos}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+\textbf{} \\
+Históricamente, la Inteligencia Artificial (IA) ha sido una disciplina de "fuerza bruta" computacional, confinada a gigantescos centros de datos y servidores en la nube. Sin embargo, para un ingeniero mecatrónico, la dependencia de la nube presenta tres enemigos críticos: la latencia, el consumo de ancho de banda y la vulnerabilidad de la conexión. La respuesta a estos retos es la Edge AI (IA en el borde), una tecnología que traslada el "cerebro" del algoritmo directamente al "cuerpo" de la máquina: el sistema embebido.
+
+\subsection*{El Hardware como Protagonista}
+El nacimiento de la Edge AI no habría sido posible sin la evolución de los microcontroladores y FPGAs. Hoy en día, chips de bajo consumo como los de la familia STM32 o los módulos especializados de NVIDIA (Jetson Nano) permiten ejecutar redes neuronales convolucionales (CNN) en tiempo real. Esto significa que un sensor ya no solo envía datos crudos; ahora es capaz de interpretar su entorno. Por ejemplo, una cámara en una línea de producción en San Luis Potosí ya no envía video a un servidor en EE. UU.; el propio sensor identifica defectos de soldadura o piezas mal alineadas en milisegundos, enviando solo la orden de "detener" o "corregir" al actuador.
+
+\subsection*{Mantenimiento Predictivo}
+Una de las aplicaciones más disruptivas para la ingeniería mecatrónica es el mantenimiento predictivo avanzado. Mediante el uso de técnicas como la Transformada Rápida de Fourier (FFT) ejecutada localmente, los sistemas embebidos pueden analizar la "firma acústica" o las vibraciones de un motor industrial. La Edge AI aprende el comportamiento normal del equipo y es capaz de detectar desviaciones mínimas que preceden a una falla mecánica. Esto elimina las "mermas" por paros no programados, permitiendo que la industria pase de un modelo de reparación reactiva a uno de prevención inteligente basada en datos reales, no en suposiciones.
+
+\subsection*{Desafíos Técnicos y el Futuro del Ingeniero}
+Implementar Edge AI requiere que el ingeniero domine una tríada de habilidades:
+
+\subsection*{Optimización de Modelos}
+Reducir el tamaño de las redes neuronales (quantization) para que quepan en la memoria limitada de un microcontrolador.
+
+\subsection*{Gestión Energética} Lograr que el procesamiento de IA no agote las baterías de sistemas autónomos o drones.
+
+\subsection*{Seguridad y Privacidad} Al procesar los datos localmente, se garantiza que la información sensible de la planta nunca salga de la red física.
+\vspace{0.5cm}
+
+
+
+
+% PÁGINA 2
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} La Nueva Era de los Cobots en la Industria 4.0}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+\subsection*{El Cambio de Paradigma: De la Jaula al Espacio Compartido} 
+
+Por décadas, la robótica industrial estuvo definida por máquinas masivas, veloces y potencialmente peligrosas, confinadas detrás de jaulas de seguridad y sensores de presencia que detenían toda la línea de producción ante la mínima intrusión humana. Sin embargo, la tendencia actual en mecatrónica se aleja de este aislamiento. El surgimiento de los Cobots (Collaborative Robots) ha marcado un hito en la Industria 4.0. A diferencia de sus predecesores, los cobots están diseñados específicamente para interactuar y compartir el espacio de trabajo con operarios humanos, combinando la precisión y fuerza de la máquina con la adaptabilidad y el juicio crítico del ser humano.
+
+
+\subsection*{Tecnología de Seguridad Intrínseca}\\
+
+Un robot es “colaborativo” gracias a la integración de sensores y algoritmos avanzados. Los cobots actuales incorporan sensores de torque en cada articulación y visión artificial de 360°, lo que les permite detectar mínimas fuerzas externas y detenerse en milisegundos para evitar lesiones. Además, su diseño con materiales ligeros y sin bordes afilados reduce riesgos de impacto y cumple estrictamente con las normas internacionales de seguridad industrial (ISO 10218 e ISO/TS 15066).
+%¿Qué hace que un robot sea "colaborativo"? La respuesta reside en una integración profunda de sensores y algoritmos de control avanzado. Los cobots modernos implementan sensores de torque en cada una de sus articulaciones y sistemas de visión artificial de 360 grados. Estos dispositivos permiten que el robot detecte fuerzas externas mínimas; si un operario toca accidentalmente el brazo robótico, el sistema detecta la resistencia y se detiene en milisegundos, evitando cualquier tipo de lesión. Además, su diseño suele carecer de bordes afilados y utiliza materiales ligeros para minimizar la inercia en caso de impacto, cumpliendo estrictamente con las normativas internacionales de seguridad industrial (ISO 10218 e ISO/TS 15066).
+
+\subsection*{Versatilidad y Programación Intuitiva}
+Uno de los mayores beneficios de esta tendencia es la democratización de la automatización. Mientras que un robot industrial tradicional requiere meses de programación compleja en lenguajes de bajo nivel, muchos cobots actuales permiten la programación por guiado manual. Un ingeniero mecatrónico puede simplemente tomar el brazo del robot y moverlo físicamente a través de los puntos de la trayectoria deseada; el software registra estos movimientos y los optimiza automáticamente. Esto reduce drásticamente los tiempos de implementación en tareas como:
+
+\subsection*{Pick and Place} Selección y acomodo de componentes electrónicos en placas de circuito.
+
+\subsection*{Inspección de Calidad} Uso de cámaras de alta resolución para detectar fallas estéticas en productos terminados.
+
+\subsection*{Asistencia en Ensamble} Sostener piezas pesadas o calientes mientras el humano realiza conexiones delicadas.
+
+\subsection*{El Futuro} \textbf{Inteligencia Colectiva:}
+La próxima evolución de los cobots será el uso de Inteligencia Artificial para anticipar las necesidades humanas, aprendiendo el ritmo de trabajo y ajustando su velocidad en tiempo real. Esto permitirá optimizar la cadena de suministro sin comprometer la seguridad. Para los estudiantes de la UAMZM, dominar estas interfaces es esencial, ya que la industria manufacturera del Bajío avanza hacia sistemas flexibles que favorecen una producción personalizada y eficiente.
+%El siguiente paso en esta tendencia es la integración de la Inteligencia Artificial para que los cobots no solo "reaccionen" al humano, sino que "anticipen" sus necesidades. En el futuro cercano, un cobot será capaz de aprender el ritmo de trabajo de su compañero humano y ajustar su velocidad dinámicamente, optimizando la cadena de suministro sin sacrificar la seguridad. Para los estudiantes de la UAMZM, dominar estas interfaces de colaboración es una competencia crítica, ya que la industria manufacturera del Bajío está migrando rápidamente hacia estos sistemas flexibles que permiten una producción personalizada y eficiente.
+\vspace{0.5cm}
+
+% PÁGINA 3
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} El Camino del Ingeniero}}
+%\hrule height 1pt \vspace{0.4cm}
+\begin{multicols}{2}
+\small
+\textbf{Habilidades Críticas para el Éxito Académico y Profesional} \\
+Más allá del Aula
+La Ingeniería Mecatrónica en la UAMZM es reconocida por su alta exigencia técnica. Sin embargo, el éxito en esta disciplina no depende únicamente de memorizar fórmulas o aprobar exámenes de cálculo y estática. El verdadero ingeniero mecatrónico se forma en la intersección de la disciplina académica, la curiosidad técnica y la capacidad de autogestión. En un entorno donde la tecnología evoluciona a pasos agigantados, estas son las competencias que definen a un profesional de vanguardia.
+
+\textbf{1. El Dominio de la Abstracción y la Lógica}
+
+Muchos estudiantes ven al Cálculo, al Álgebra Lineal y a la Física como obstáculos administrativos, pero en realidad son las herramientas de diseño más poderosas.
+
+La Matemática como Lenguaje: No se trata de resolver derivadas, sino de entender que esa derivada representa la velocidad de un actuador o el cambio de temperatura en un proceso térmico.
+
+Lógica de Programación: Antes de tocar una sola tecla en C++ o Python, es vital dominar la lógica. El uso de herramientas como PSeInt o diagramas de flujo permite estructurar la mente para evitar errores de hardware que podrían ser costosos o peligrosos.
+
+\textbf{2. Profesionalización de la Documentación Técnica}
+
+Un error común es descuidar los reportes de laboratorio. En la industria, un ingeniero que no sabe comunicar sus ideas es un ingeniero invisible.
+
+El Estándar LaTeX: El uso de entornos como Overleaf para redactar documentos técnicos no es solo una cuestión estética. La capacidad de gestionar fórmulas complejas, bibliografía automatizada y formatos profesionales es una habilidad que las empresas de alta tecnología valoran profundamente.
+
+Control de Versiones: Aprender a usar herramientas como GitHub para respaldar el código de tus proyectos te permite trabajar de forma colaborativa y profesional, algo esencial en equipos multidisciplinarios.
+
+\textbf{3. Mentalidad "Maker" y Aprendizaje Autodidacta}
+La currícula universitaria es la base, pero el hambre de aprender debe ir más allá.
+
+DIY y Reparaciones: No hay mejor escuela que la práctica. Ajustar los piñones de una bicicleta, entender el ciclo de refrigeración de una nevera o reparar un pequeño electrodoméstico te da una sensibilidad táctil sobre la mecánica y la electrónica que los libros no pueden transmitir.
+
+Prototipado Rápido: Aprovecha las herramientas de AutoCAD para visualizar tus ideas. Fallar en un plano digital es gratis; fallar en el taller con materiales reales es caro. Aprender a prototipar antes de construir es el sello de un ingeniero eficiente.
+
+\textbf{4. Disciplina, Salud y Equilibrio}
+Finalmente, la ingeniería es un maratón de aguante. Al igual que en el entrenamiento de fuerza, la constancia vence al talento natural.
+
+Cuerpo y Mente: Una rutina de ejercicio constante no solo mejora la salud física, sino que oxigena el cerebro y reduce el estrés acumulado por las entregas y exámenes.
+
+Gestión del Tiempo: Evitar las "amanecidas" mediante una planificación semanal permite mantener la claridad mental necesaria para depurar un código complejo o resolver un sistema de ecuaciones diferenciales bajo presión.
+%\columnbreak
+\textbf{} \\
+
+\end{multicols}
+
+% PÁGINA 4
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} Biomecatrónica}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+\subsection*{La Fusión de Dos Mundos}
+La biomecatrónica es una de las ramas más fascinantes y éticamente significativas de nuestra carrera. No se trata solo de construir máquinas, sino de diseñar sistemas que interactúen directamente con el cuerpo humano para restaurar funciones motoras perdidas o potenciar las capacidades físicas. En esta disciplina, el ingeniero mecatrónico debe dejar de ver al "usuario" como un operador y empezar a verlo como parte integral del sistema de control, creando una simbiosis perfecta entre la biología y la electromecánica.
+
+\subsection*{El Corazón de la Tecnología:} \textbf{La Interfaz Mioeléctrica}
+
+El mayor reto de la biomecatrónica es la comunicación. ¿Cómo le dice el cerebro a una mano de plástico y metal que se cierre? La respuesta está en los potenciales de acción. Cuando un músculo se contrae, genera una pequeña señal eléctrica (del orden de microvoltios). Mediante el uso de sensores de Electromiografía de Superficie (sEMG), los ingenieros captan estas señales, las filtran para eliminar el ruido electrónico y las procesan mediante microcontroladores de alta velocidad.
+
+Una vez procesada, la señal se convierte en un comando para actuadores de precisión, como servomotores de alto torque o motores de pasos miniatura. El diseño de estas prótesis requiere un conocimiento profundo de la antropometría y la distribución de cargas, asegurando que el dispositivo sea ligero, ergonómico y capaz de realizar movimientos complejos como el agarre de precisión (pinza) o el agarre de fuerza.
+
+\subsection*{Retroalimentación Hápica:} \textbf{Sintiendo a través del Metal}
+
+La vanguardia actual no solo busca que la prótesis se mueva, sino que el usuario pueda "sentir" con ella. Esto se logra mediante la retroalimentación hápica. Al colocar sensores de fuerza y presión en las yemas de los dedos robóticos, el sistema puede enviar una señal de regreso al usuario a través de vibraciones o pequeñas presiones en la piel de la extremidad residual. De esta forma, una persona puede saber si está sosteniendo un huevo con la fuerza suficiente para no tirarlo, pero sin romperlo, cerrando así el lazo de control sensorial.
+
+\subsection*{Exoesqueletos y el Futuro de la Movilidad}
+Más allá de las prótesis, la biomecatrónica está revolucionando la industria y la rehabilitación con los exoesqueletos. Estos dispositivos "vestibles" asumen parte de la carga mecánica del operario, reduciendo la fatiga y previniendo lesiones lumbares en trabajadores que cargan objetos pesados. En el ámbito clínico, los exoesqueletos de marcha permiten que pacientes con paraplejía vuelvan a caminar, utilizando algoritmos de equilibrio dinámico que imitan la marcha humana natural.
+
+
+\newpage
+\barraLateral 
+\textbf{}
+%\section*{{\Huge\color{azulUASLP} Entrevistados}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+%\subsection*{Para esta sección se entrivisto a las siguientes personas}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{padron.jpeg}
+    \caption*{ING. Luis Jesús Padrón Padrón}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{ivana.png}
+    \caption*{ING. Ivanna Lopez Reyna}
+    \label{fig:placeholder}
+\end{figure}
+
+\newpage
+\barraLateral 
+\textbf{}
+\section*{{\Huge\color{azulUASLP} Estas fueron las personas que entrevistamos y acontinuación se presenta las preguntas e información que nos brindaron.}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{image.png}
+    \caption*{David Hernandez}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{tonyLoredo.jpeg}
+    \caption*{Rosendo Antonio Loredo Garcia}
+    \label{fig:placeholder}
+\end{figure}
+
+%\subsection*{Para esta sección se entrivisto a las siguientes personas}
+% PÁGINA 5
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} Entrevistas}}
+%\hrule height 1pt \vspace{0.4cm}
+\begin{multicols}{2}
+\small
+
+
+% --- ENTREVISTA 1 ---
+\section*{Ing. Rosendo Antonio Loredo Garcia | Catedrático}
+\textbf{Introducción:} 
+Entrevista realizada al Ing. Rosendo Loredo sobre su experiencia profesional y consejos para la formación de nuevos ingenieros mecatrónicos.
+
+
+\textbf{1)De acuerdo con su experiencia, ¿cuál considera que es el cimiento más importante que un estudiante debe construir en los primeros semestres?}
+
+Definitivamente, la base matemática y física. No se trata solo de pasar Cálculo o Álgebra por compromiso académico; esas materias son el lenguaje con el que vas a describir el comportamiento de un motor o la estabilidad de una estructura. Si no tienes una base fuerte ahí, cuando llegues a materias como Control o Diseño Mecatrónico, te vas a sentir perdido. Mi consejo es: ten hambre de entender el "porqué" de las fórmulas.
+
+\textbf{2)¿Qué importancia tienen las habilidades manuales o técnicas frente al uso de software especializado?}
+
+Son vitales. Un ingeniero mecatrónico que sabe programar en Python o MATLAB, pero no sabe usar un cautín para soldar un componente o no entiende cómo ajustar los piñones de un mecanismo, está a medias. La ingeniería es ensuciarse las manos. En el taller es donde realmente entiendes la tolerancia de los materiales y la importancia de un buen diseño físico antes de pasar al código.}
+
+\textbf{3)¿Qué habilidades adicionales recomendaría desarrollar fuera del plan de estudios?}
+
+El dominio de herramientas de documentación profesional como \LaTeX{} es un diferenciador enorme. En la industria, la claridad con la que presentas un reporte técnico habla de tu orden mental. También recomendaría aprender inglés técnico y lógica de programación sólida. La tecnología cambia, pero la lógica se queda contigo.También recomendaría aprender inglés técnico y lógica de programación sólida. La tecnología cambia, pero la lógica se queda contigo.
+
+\textbf{4)¿Cuál fue el reto más grande que enfrentó durante su formación académica o profesional?}
+
+El ensamble de sistemas complejos. Lograr que la mecánica, la electrónica y el software hablen el mismo idioma en un proyecto de "Diseño Mecatrónico" es un desafío de resistencia. Requiere mucha paciencia y, sobre todo, capacidad de autogestión para investigar lo que no te enseñan en el salón.
+
+\textbf{5)¿Qué mensaje le daría a la generación 2026 de la UAMZM?}
+Que esta carrera es un maratón, no un sprint. Va a haber momentos de mucho aguante, de noches sin dormir intentando corregir un error de código o un corto circuito, pero vale la pena. No se conformen con lo básico; busquen proyectos personales, rompan cosas, repárenlas y mantengan siempre esa curiosidad técnica.
+
+%\columnbreak
+%[]
+\end{multicols}
+
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} Entrevistas}}
+%\hrule height 1pt \vspace{0.4cm}
+\begin{multicols}{2}
+\small
+\subsection*{David Hernández | Estudiante de 8° Semestre de Ingeniería Mecatrónica}
+
+\textbf{Introducción:}
+Entrevista realizada a David Hernández, alumno de octavo semestre en la UASLP-UAMZM, quien comparte su visión sobre la transición hacia las materias de especialidad y los retos del diseño mecatrónico avanzado.
+
+
+\textbf{1)Ahora que estás en 8° semestre, ¿cuál consideras que es el software indispensable que un estudiante debe dominar antes de llegar a esta etapa de la carrera?}
+
+Basado en lo que he vivido, es fundamental el manejo de herramientas de cálculo y simulación como MATLAB y Python. Sin embargo, para la presentación de proyectos de alto nivel, el dominio de LaTeX es lo que realmente profesionaliza el trabajo de un ingeniero. No basta con que el sistema funcione; hay que saber documentarlo con rigor científico y técnico ante los sinodales.
+
+\textbf{2)En tu experiencia académica actual, ¿qué importancia tiene la integración de las diferentes áreas de la mecatrónica en los proyectos finales?}
+
+Ese es precisamente el mayor reto que enfrentas en los últimos semestres: el "Diseño Mecatrónico". Lograr que la electrónica de control no interfiera con la mecánica y que el software responda en tiempo real a las variables físicas. Muchos compañeros fallan al ver las materias como aisladas, cuando en realidad son un solo organismo que debe estar en perfecta sincronía para que el proyecto camine.
+
+\textbf{3)¿Qué habilidades prácticas o de taller consideras que no deben faltarle a alguien que apenas va en los primeros semestres?}
+
+La habilidad de soldar componentes electrónicos con precisión y el entendimiento profundo de los mecanismos. A veces nos perdemos en la abstracción del software en los primeros años, pero un ingeniero mecatrónico debe tener la capacidad de diagnosticar y reparar fallas físicas. La práctica constante en el taller es lo que realmente consolida la teoría que vemos en el aula.
+
+\textbf{4)¿Qué consejo le darías a los alumnos de la generación 2026 que sienten pesada la carga de materias de ciencias básicas?}
+
+La mecatrónica es una carrera de resistencia, no de velocidad. Mi consejo es que se enfoquen en desarrollar una lógica sólida. Los lenguajes de programación y los componentes pueden cambiar, pero la lógica de resolución de problemas es universal. Mantengan la curiosidad, no se queden solo con lo de la clase y experimenten por su cuenta.
+
+\textbf{5)¿Cómo definirías la evolución que has visto en la carrera dentro de la UAMZM durante tus años de estudio?}
+
+He visto una etapa de especialización y crecimiento. La integración de nuevas tecnologías exige que seamos cada vez más adaptables y autodidactas. El ingeniero que sale hoy de la Unidad Zona Media debe estar listo para liderar la industria, siendo capaz de aprender cualquier herramienta nueva que se le presente.}
+
+
+%\columnbreak
+%[]
+\end{multicols}
+
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} Entrevistas}}
+%\hrule height 1pt \vspace{0.4cm}
+\begin{multicols}{2}
+\small
+
+\subsection*{Ing. Luis Jesús Padrón Padrón | Catedrático de Ofimática y Egresado UAMZM}
+
+\textbf{Introducción:}
+Entrevista realizada al Ing. Padrón, orgulloso egresado de nuestra unidad y actual docente de la materia de Ofimática. Su perspectiva es clave para entender cómo las herramientas digitales básicas y la disciplina en materias como Termodinámica forman la base de un ingeniero mecatrónico de excelencia.
+
+\textbf{1)Como docente que nos imparte Ofimática, ¿por qué considera que estas herramientas digitales nos dan otra forma de ver y entender la ingeniería?}
+
+El uso de herramientas digitales como las que vemos en clase, junto con Python, Overleaf e incluso la IA, es fundamental porque te dan otra forma de ver y entender la ingeniería; no se quedan solo en lo teórico, sino que te permiten llevar el conocimiento a lo práctico. Dominar la programación en C y estas plataformas genera habilidades básicas que facilitan mucho las prácticas siguientes.
+
+\textbf{2)En materias de alta exigencia como Termodinámica, ¿qué recursos recomienda aplicar para cumplir con los estándares que el docente pida?}
+
+En Termodinámica, la clave es aprovechar todos los recursos disponibles para tratar de cumplir con los estándares que el docente pida. Lo más importante es no bajar la guardia con las actividades y, sobre todo, no dejar todo para el final; en esta carrera simplemente no hay tiempo para hacer todo si se acumula el trabajo.
+
+\textbf{3)Usted menciona que hay cosas que se aprenden en la teoría y otras en la práctica, ¿cómo influye esto en nuestro desempeño en el taller?}
+Es vital porque hay cosas que se aprenden en lo teórico y en la práctica no, y viceversa. La práctica amplía tus conocimientos y te da habilidades esenciales, como saber soldar. Esa destreza manual, combinada con la teoría, es lo que realmente permite resolver problemas reales. Practicar genera habilidades básicas que facilitan mucho las tareas de programación y ensamble.
+
+\textbf{4)¿Qué tres consideraciones básicas le daría a sus alumnos para tener éxito y no rendirse en el camino?}
+
+Primero, agarrar gusto a todos los temas, aunque de entrada no te gusten. Segundo, saber matemáticas; hoy en día no hay escusa para no aprenderlas con la tecnología actual. Y tercero, entender que esta es una carrera de mucho aguante; te hace sufrir, pero vale la pena si tienes curiosidad y hambre de aprender. Hay que tener una base fuerte de matemáticas para soportar lo que viene.
+
+\textbf{5)¿Cuál es el mensaje que les deja para cuando enfrentan rachas difíciles en el semestre?}
+
+Deben entender que hay rachas buenas y hay rachas malas, pero ninguna es permanente. No se rindan, porque si lo hacen, le están fallando a su "yo del futuro". La mecatrónica requiere ser curioso, tener hambre de superación y no rendirse a pesar de las dificultades.
+
+
+%\columnbreak
+%[]
+\end{multicols}
+
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} Entrevistas}}
+%\hrule height 1pt \vspace{0.4cm}
+\begin{multicols}{2}
+\small
+
+\subsection*{ Ing. Ivanna Lopez Reyna | Catedrática de Álgebra Lineal y Egresada UAMZM
+}
+
+\textbf{Introducción:}
+Entrevista realizada a la Ing. Ivana, docente de nuestra unidad y especialista en el área de Álgebra Lineal. Como egresada de esta institución, comparte su experiencia en proyectos de alta exigencia y la importancia de la formación integral en la mecatrónica.
+
+\textbf{1)De acuerdo con su experiencia académica en esta institución, ¿Cuál fue el proyecto que más la marcó y qué retos representó?}
+
+El proyecto del brazo robótico fue, sin duda, uno de los mayores desafíos. Demandó mucho tiempo, desvelos y, sobre todo, un fuerte trabajo en equipo. Logramos sacarlo adelante trabajando hasta tarde y manteniendo una comunicación constante y efectiva con todos los integrantes del equipo. En la robótica, si el equipo no está sincronizado, el robot tampoco lo estará.
+
+\textbf{2)En su trayectoria, ¿cuáles han sido las herramientas de software que más ha utilizado y que considera esenciales para nosotros?}
+
+El dominio de software como MATLAB, LabVIEW, AutoCAD, Fusion 360 y CNC es indispensable. Estas herramientas son un complemento vital porque un ingeniero mecatrónico tiene que saber de todo. Es fundamental entender tanto la parte programable como la parte física; no puedes ser bueno en una sin comprender la otra.
+
+\textbf{3)Respecto al campo laboral actual, ¿en qué área ve más oportunidad y qué consejo nos da para prepararnos desde ahora?}
+
+La programación es un campo con muchísima apertura. Mi consejo es que aprovechen el tiempo al máximo y realmente expriman los conocimientos de sus maestros. Tomen cada práctica de laboratorio en serio porque este tiempo es el más valioso que tendrán. No se queden solo con lo que ven en clase; investiguen más y sean curiosos con los temas.
+
+\textbf{4)Para los alumnos que están cursando Álgebra Lineal y las materias de tronco común, ¿qué perfil deben desarrollar para no desertar?}
+
+Deben ser personas a las que les gusten las matemáticas, que tengan mucha curiosidad y que se consideren personas prácticas. El álgebra no es solo números en papel; es la base para entender el movimiento y la programación de los sistemas que construirán después.
+
+\textbf{5)¿Cuál es el secreto para que un equipo de trabajo funcione bajo presión en proyectos de robótica?}
+La clave es la organización y no rendirse ante los fallos técnicos. Hay que ser apasionados, tener hambre de aprender y entender que los desvelos valen la pena cuando ves tu proyecto funcionar. Como egresada, les digo: aprovechen cada recurso que la UAMZM les ofrece.
+
+
+%\columnbreak
+%[]
+\end{multicols}
+
+
+% PÁGINA 6
+\newpage
+\barraLateral 
+\section*{{\Huge\color{azulUASLP} FEPZM}}
+%\hrule height 1pt \vspace{0.4cm}
+\small
+
+\section*{Historia y evolución de la carrera en la FEPZM}
+La Facultad de Estudios Profesionales Zona Media (FEPZM) de la Universidad Autónoma de San Luis Potosí se fundó como una entidad descentralizada en Río Verde, con el propósito de acercar la educación superior a la región y atender la demanda de formación profesional en la Zona Media del estado. 
+Su ubicación estratégica en el ejido Puente del Carmen, a 4 km del centro de la ciudad, ha permitido que estudiantes de comunidades rurales y urbanas accedan a programas de calidad sin necesidad de trasladarse a la capital.
+
+Desde sus inicios, la FEPZM ofreció programas básicos de licenciatura y paulatinamente amplió su oferta académica hacia áreas de gran impacto regional:
+\begin{itemize}
+    \item \textbf{Ingenierías:} orientadas al desarrollo tecnológico, industrial y agrícola de la región.
+    \item \textbf{Ciencias Sociales y Administrativas:} enfocadas en la gestión empresarial, el desarrollo comunitario y la administración pública.
+    \item \textbf{Ciencias de la Salud:} con programas que atienden necesidades médicas y de bienestar en la Zona Media.
+\end{itemize}
+
+La evolución de la FEPZM se ha caracterizado por:
+\begin{enumerate}
+    \item Procesos de certificación y acreditación de sus programas, garantizando estándares nacionales de calidad.
+    \item Creación de espacios de investigación y extensión, que vinculan la academia con la sociedad.
+    \item Consolidación como un referente educativo regional, formando profesionales que contribuyen al desarrollo económico y social.
+\end{enumerate}
+
+\section*{Proyectos relevantes dentro de la universidad}
+La FEPZM impulsa proyectos que fortalecen la vinculación con la sociedad y la innovación académica, entre los que destacan:
+
+\begin{itemize}
+    \item \textbf{Foro Multidisciplinario de Innovación Social (FOMIS):} 
+    Evento anual que reúne estudiantes, investigadores y especialistas para proponer soluciones a problemáticas sociales. Se realiza en el Centro de Extensión e Investigación El Balandrán, en Ciudad Fernández. Los temas abordados incluyen educación, salud, ingeniería, humanidades y química. Este foro fomenta el diálogo entre academia y sociedad, generando proyectos aplicados en la región.
+    
+    \item \textbf{Centro de Bienestar Familiar:} 
+    Espacio de apoyo comunitario que ofrece servicios de orientación psicológica, talleres de desarrollo humano y actividades de bienestar para estudiantes y familias de la región.
+    
+    \item \textbf{Proyectos de vinculación comunitaria:} 
+    Programas de servicio social y prácticas profesionales que permiten a los estudiantes aplicar sus conocimientos en beneficio de comunidades locales, fortaleciendo la responsabilidad social universitaria.
+    
+    \item \textbf{Investigación aplicada:} 
+    Iniciativas en áreas como agricultura sustentable, energías renovables y desarrollo empresarial, que buscan aportar soluciones a los retos económicos y ambientales de la Zona Media.
+\end{itemize}
+
+\section*{Conclusión}
+La FEPZM de la UASLP ha evolucionado de manera constante, ampliando su oferta académica y consolidando proyectos de impacto social y científico. Hoy en día, se reconoce como un motor de innovación y desarrollo en la Zona Media, formando profesionales comprometidos con la transformación de su entorno.
+
+% PÁGINA 7 (CONTRAPORTADA / CIERRE)
+%\newpage
+
+
+
+\end{adjustwidth}
+\end{document}

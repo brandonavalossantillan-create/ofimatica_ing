@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+
+% --- Paquetes Esenciales ---
+\usepackage[utf8]{inputenc}    % Caracteres en español
+\usepackage[spanish]{babel}   % Idioma español
+\usepackage{amsmath}          % Matemáticas avanzadas
+\usepackage{geometry}         % Márgenes
+\geometry{letterpaper, margin=1in}
+
+% --- Paquete para Dibujar Circuitos Eléctricos ---
+\usepackage[siunitx, american]{circuitikz} 
+
+\begin{document}
+
+\section{EJEMPLO DE CIRCUITOS ELÉCTRICOS}
+
+\subsection*{CIRCUITO 1: FUENTE DC Y RESISTENCIAS}
+\begin{center}
+\begin{circuitikz}[scale=1.2]
+    \draw (0,0) to[battery2, l=$5\text{V}$] (0,3) % Fuente DC
+          to[R, l=$220\,\Omega$] (3,3)          % Resistencia
+          -- (3,0) -- (0,0);                    % Cierre de malla
+\end{circuitikz}
+\end{center}
+
+\subsection*{CIRCUITO 2: RESISTENCIA Y CAPACITOR EN SERIE}
+\begin{center}
+\begin{circuitikz}[scale=1.2]
+    \draw (0,0) to[sinusoidal voltage source, l=$v(t)$] (0,3) % Fuente AC
+          to[R, l=$220\,\Omega$] (2.5,3)                     % Resistencia
+          to[C, l=$4\text{F}$] (5,3)                         % Capacitor en serie
+          -- (5,0) -- (0,0);                                 % Cierre de malla
+\end{circuitikz}
+\end{center}
+
+\subsection{CIRCUITO 3: INDUCTOR Y RESISTENCIA EN SERIE}
+\begin{center}
+\begin{circuitikz}[scale=1.2]
+    \draw (0,0) to[battery2, l=$5\text{V}$] (0,3) % Fuente DC
+          to[L, l=$5\text{mH}$] (2.5,3)           % Inductor
+          to[R, l=$220\,\Omega$] (5,3)            % Resistencia en serie
+          -- (5,0) -- (0,0);                      % Cierre de malla
+\end{circuitikz}
+\end{center}
+
+\subsection{CIRCUITO 4: LEDS EN PARALELO}
+\begin{center}
+\begin{circuitikz}[scale=1.2]
+    \draw (0,0) to[battery2, l=$5\text{V}$] (0,3) % Fuente DC
+          -- (2,3) to[full led, l=LED1] (2,0)     % Primer LED en paralelo
+          -- (0,0);
+    \draw (2,3) -- (4,3) to[full led, l=LED2] (4,0) % Segundo LED en paralelo
+          -- (2,0);
+\end{circuitikz}
+\end{center}
+
+\end{document}

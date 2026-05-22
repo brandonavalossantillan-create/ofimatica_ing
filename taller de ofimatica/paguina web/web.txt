@@ -1,0 +1,332 @@
+/**
+ * SISTEMA DE GESTIÓN DE PRÉSTAMOS DE LABORATORIO
+ * Backend v1.0 - Google Apps Script
+ * Desarrollado con buenas prácticas de concurrencia y manejo de errores.
+ */
+
+// Configuración global de nombres de hojas
+const CONFIG = {
+  SHEET_MATERIALES: "CatalogoMateriales",
+  SHEET_PRESTAMOS: "Prestamos",
+  SHEET_ALUMNOS: "ClavesAlumnos"
+};
+
+/**
+ * Renderiza la interfaz principal del Dashboard.
+ */
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('Index')
+      .setTitle('Sistema de Laboratorio - Dashboard')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+/**
+ * Obtiene las hojas de cálculo de forma segura, validando su existencia.
+ */
+function getSheetSecure(sheetName) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    throw new Error(`La hoja de cálculo "${sheetName}" no fue encontrada.`);
+  }
+  return sheet;
+}
+
+/**
+ * Reutiliza la lógica para mapear datos de una hoja con encabezados a un array de objetos.
+ */
+function sheetToObjects(sheet) {
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  const headers = data[0];
+  return data.slice(1).map(row => {
+    let obj = {};
+    headers.forEach((header, i) => {
+      obj[header.toString().trim()] = row[i];
+    });
+    return obj;
+  });
+}
+
+/**
+ * 1. OBTENER MATERIALES DISPONIBLES
+ * Devuelve únicamente los materiales cuya Cantidad Disponible sea mayor a 0.
+ */
+function getMaterialesDisponibles() {
+  try {
+    const sheet = getSheetSecure(CONFIG.SHEET_MATERIALES);
+    const data = sheet.getDataRange().getValues();
+    
+    if (data.length <= 1) return [];
+    
+    let materialesDisponibles = [];
+    
+    // Recorremos las filas desde la 2da (índice 1) saltando los encabezados
+    for (let i = 1; i < data.length; i++) {
+      let id = data[i][0];          // Columna A
+      let nombre = data[i][1];      // Columna B
+      let descripcion = data[i][2]; // Columna C
+      let total = data[i][3];       // Columna D
+      let disponible = parseInt(data[i][4]) || 0; // Columna E (Cantidad Disponible)
+      
+      // Si la cantidad disponible en la columna E es mayor a 0, lo agregamos
+      if (disponible > 0) {
+        materialesDisponibles.push({
+          "ID": id,
+          "Nombre": nombre,
+          "Descripción": descripcion,
+          "Cantidad Total": total,
+          "Cantidad Disponible": disponible
+        });
+      }
+    }
+    
+    return materialesDisponibles;
+  } catch (error) {
+    Logger.log("Error en getMaterialesDisponibles: " + error.toString());
+    throw new Error("No se pudo cargar el catálogo de materiales.");
+  }
+}
+
+/**
+ * 2. BUSCAR ALUMNO POR CLAVE
+ * Busca en la base de datos de alumnos y devuelve el nombre correspondiente.
+ */
+function buscarNombrePorClave(clave) {
+  if (!clave) return "";
+  try {
+    const sheet = getSheetSecure(CONFIG.SHEET_ALUMNOS);
+    const data = sheet.getDataRange().getValues();
+    
+    if (data.length <= 1) {
+      Logger.log("La hoja ClavesAlumnos está vacía.");
+      return "";
+    }
+
+    // Buscamos en las filas (saltando los encabezados de la fila 1)
+    for (let i = 1; i < data.length; i++) {
+      let claveEnHoja = data[i][0]; // Columna A (Clave)
+      let nombreEnHoja = data[i][1]; // Columna B (Nombre)
+      
+      if (claveEnHoja && claveEnHoja.toString().trim() === clave.toString().trim()) {
+        return nombreEnHoja; // ¡Encontrado!
+      }
+    }
+    
+    Logger.log("La clave " + clave + " no se encontró en las filas leídas.");
+    return ""; // Si termina el ciclo y no lo encuentra
+  } catch (error) {
+    Logger.log("Error en buscarNombrePorClave: " + error.toString());
+    return "";
+  }
+}
+
+/**
+ * 3. REGISTRAR PRÉSTAMO
+ * Maneja el registro del préstamo aplicando un bloqueo de script (LockService) 
+ * para garantizar la integridad del inventario ante peticiones simultáneas.
+ */
+function registrarPrestamo(data) {
+  const lock = LockService.getScriptLock();
+  try {
+    // Intentar adquirir el bloqueo durante un máximo de 10 segundos
+    if (!lock.tryLock(10000)) {
+      throw new Error("El sistema está saturado. Por favor, intenta de nuevo en unos segundos.");
+    }
+
+    // Validar datos de entrada básicos
+    if (!data.claveAlumno || !data.idMaterial || !data.cantidad || data.cantidad <= 0) {
+      throw new Error("Datos de préstamo incompletos o inválidos.");
+    }
+
+    const sheetMateriales = getSheetSecure(CONFIG.SHEET_MATERIALES);
+    const sheetPrestamos = getSheetSecure(CONFIG.SHEET_PRESTAMOS);
+    
+    // Buscar el material en el catálogo para verificar stock actual
+    const matData = sheetMateriales.getDataRange().getValues();
+    let filaMaterialIdx = -1;
+    let materialNombre = "";
+    let stockDisponible = 0;
+
+    for (let i = 1; i < matData.length; i++) {
+      if (matData[i][0].toString().trim() === data.idMaterial.toString().trim()) {
+        filaMaterialIdx = i + 1; // Convertir a índice de fila de Sheets (1-based)
+        materialNombre = matData[i][1];
+        stockDisponible = parseInt(matData[i][4]); // Columna E: Cantidad Disponible
+        break;
+      }
+    }
+
+    if (filaMaterialIdx === -1) throw new Error("El material seleccionado no existe.");
+    if (stockDisponible < data.cantidad) {
+      throw new Error(`Stock insuficiente. Solo quedan ${stockDisponible} unidades disponibles.`);
+    }
+
+    // Buscar nombre del alumno de forma interna para seguridad
+    const nombreAlumno = buscarNombrePorClave(data.claveAlumno);
+    if (!nombreAlumno) throw new Error("La clave del alumno no es válida.");
+
+    // ---- OPERACIÓN ATÓMICA ----
+    // A) Actualizar Inventario (Restar de Cantidad Disponible)
+    sheetMateriales.getRange(filaMaterialIdx, 5).setValue(stockDisponible - data.cantidad);
+
+    // B) Registrar en la hoja de Préstamos
+    // Columnas: Timestamp, Clave Alumno, Nombre Alumno, ID Material, Nombre Material, Cantidad, Estado, Fecha Devolución
+    sheetPrestamos.appendRow([
+      new Date(),
+      data.claveAlumno,
+      nombreAlumno,
+      data.idMaterial,
+      materialNombre,
+      data.cantidad,
+      "Prestado",
+      "" // Vacío hasta que se devuelva
+    ]);
+
+    return { success: true, message: "Préstamo registrado exitosamente." };
+
+  } catch (error) {
+    Logger.log("Error en registrarPrestamo: " + error.toString());
+    return { success: false, message: error.message || error.toString() };
+  } finally {
+    // Asegurar la liberación del bloqueo bajo cualquier circunstancia
+    lock.releaseLock();
+  }
+}
+
+/**
+ * 4. OBTENER PRÉSTAMOS ACTIVOS
+ * Recupera todos los registros cuyo estado sea "Prestado", incluyendo el índice de su fila
+ * para poder procesar la devolución de manera directa y eficiente.
+ */
+function getPrestamosActivos() {
+  try {
+    const sheet = getSheetSecure(CONFIG.SHEET_PRESTAMOS);
+    const data = sheet.getDataRange().getValues();
+    if (data.length <= 1) return [];
+
+    let prestamosActivos = [];
+
+    // Iteramos desde el final hacia el principio para ver los más recientes primero
+    for (let i = data.length - 1; i >= 1; i--) {
+      let estado = data[i][6]; // Columna G: Estado
+      
+      if (estado === "Prestado") { 
+        let fechaSalida = data[i][0]; // Columna A: Timestamp
+        
+        // Formatear la fecha para que no rompa el diseño
+        if (fechaSalida instanceof Date) {
+          fechaSalida = fechaSalida.toLocaleString();
+        }
+
+        prestamosActivos.push({
+          filaId: i + 1, // Guardamos la fila real de Sheets para poder devolverlo
+          "Timestamp": fechaSalida,
+          "Clave Alumno": data[i][1],   // Columna B
+          "Nombre Alumno": data[i][2],  // Columna C
+          "ID Material": data[i][3],    // Columna D
+          "Nombre Material": data[i][4],  // Columna E
+          "Cantidad": data[i][5],       // Columna F
+          "Estado": estado              // Columna G
+        });
+      }
+    }
+    return prestamosActivos;
+  } catch (error) {
+    Logger.log("Error en getPrestamosActivos: " + error.toString());
+    throw new Error("No se pudieron cargar los préstamos activos.");
+  }
+}
+
+/**
+ * 5. REGISTRAR DEVOLUCIÓN
+ * Procesa el retorno del material a través del identificador de fila único del préstamo.
+ */
+function registrarDevolucion(filaId) {
+  const lock = LockService.getScriptLock();
+  try {
+    if (!lock.tryLock(10000)) {
+      throw new Error("Sistema ocupado. Intenta de nuevo.");
+    }
+
+    const sheetPrestamos = getSheetSecure(CONFIG.SHEET_PRESTAMOS);
+    const sheetMateriales = getSheetSecure(CONFIG.SHEET_MATERIALES);
+
+    // Obtener los datos específicos de la fila del préstamo
+    const filaPrestamo = sheetPrestamos.getRange(filaId, 1, 1, 8).getValues()[0];
+    const idMaterial = filaPrestamo[3];   // Columna D
+    const cantidadPrestada = parseInt(filaPrestamo[5]); // Columna F
+    const estadoActual = filaPrestamo[6]; // Columna G
+
+    if (estadoActual !== "Prestado") {
+      throw new Error("Este registro ya figura como devuelto o no es válido.");
+    }
+
+    // Localizar el material en el catálogo para reponer el stock
+    const matData = sheetMateriales.getDataRange().getValues();
+    let filaMaterialIdx = -1;
+    let stockDisponibleActual = 0;
+
+    for (let i = 1; i < matData.length; i++) {
+      if (matData[i][0].toString().trim() === idMaterial.toString().trim()) {
+        filaMaterialIdx = i + 1;
+        stockDisponibleActual = parseInt(matData[i][4]);
+        break;
+      }
+    }
+
+    // ---- OPERACIÓN ATÓMICA DE DEVOLUCIÓN ----
+    // A) Actualizar el catálogo de materiales (Sumar stock devuelto)
+    if (filaMaterialIdx !== -1) {
+      sheetMateriales.getRange(filaMaterialIdx, 5).setValue(stockDisponibleActual + cantidadPrestada);
+    }
+
+    // B) Actualizar la fila del préstamo original
+    sheetPrestamos.getRange(filaId, 7).setValue("Devuelto"); // Estado
+    sheetPrestamos.getRange(filaId, 8).setValue(new Date());  // Fecha Devolución
+
+    return { success: true, message: "Devolución procesada correctamente." };
+
+  } catch (error) {
+    Logger.log("Error en registrarDevolucion: " + error.toString());
+    return { success: false, message: error.message || error.toString() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * EXTRA: OBTENER DATOS DE INVENTARIO PARA GRÁFICOS
+ * Proporciona un resumen consolidado estructurado para Google Charts.
+ */
+function getDatosGraficoInventario() {
+  try {
+    const sheet = getSheetSecure(CONFIG.SHEET_MATERIALES);
+    const data = sheet.getDataRange().getValues();
+    
+    // Estructura base que requiere Google Charts
+    let dataChart = [["Material", "Disponible", "En Préstamo"]];
+    
+    if (data.length <= 1) return dataChart;
+    
+    // Recorremos las filas por posición física
+    for (let i = 1; i < data.length; i++) {
+      let nombre = data[i][1];       // Columna B: Nombre
+      let total = parseInt(data[i][3]) || 0;       // Columna D: Cantidad Total
+      let disponible = parseInt(data[i][4]) || 0;  // Columna E: Cantidad Disponible
+      
+      let enPrestamo = total - disponible;
+      if (enPrestamo < 0) enPrestamo = 0;
+      
+      // Solo metemos al gráfico materiales que tengan un nombre válido
+      if (nombre) {
+        dataChart.push([nombre.toString(), disponible, enPrestamo]);
+      }
+    }
+    
+    return dataChart;
+  } catch (error) {
+    Logger.log("Error en getDatosGraficoInventario: " + error.toString());
+    return [["Material", "Disponible", "En Préstamo"]];
+  }
+}

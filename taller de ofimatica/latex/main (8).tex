@@ -1,0 +1,97 @@
+\documentclass{beamer}
+
+\mode<presentation>{
+  \usetheme{Madrid}
+  \usecolortheme{default}
+  \usefonttheme{default}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+% ===== Idioma y codificación =====
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+% ===== Paquetes que SÍ usas =====
+\usepackage{graphicx}    % imágenes
+\usepackage{amsmath}     % matemáticas
+\usepackage{circuitikz}  % diagrama eléctrico (circuito)
+\usepackage{tikz}        % por si deseas otro dibujo simple (no abusamos)
+\usetikzlibrary{positioning}
+
+% ===== Comandos personalizados (y los usamos más abajo) =====
+\newcommand{\materia}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\miNombre}{\textbf{Brandon Avalos}}
+
+% ===== Datos portada =====
+\title[Mecatrónica]{Mecatrónica}
+\subtitle{Día de un estudiante}
+\author[\miNombre]{\miNombre}
+\institute{Facultad de Estudios Profesionales Zona Media}
+\date{25/02/2026}
+
+\begin{document}
+
+% ---------- Frame 1: Portada ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Frame 2: Tabla + Imagen ----------
+\begin{frame}{Mi Rutina Semanal}
+{\footnotesize
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Lunes & Martes & Miércoles & Jueves & Viernes \\ \hline
+Espalda/Bíceps & Pierna completa & Pecho/Tríceps & Espalda/Bíceps & Pierna completa \\ \hline
+\end{tabular}
+\par\medskip
+\includegraphics[width=0.45\linewidth]{espal.png} % <-- renombra o sube tu imagen con este nombre
+\captionof{ }{  }
+}
+\end{frame}
+
+% ---------- Frame 3: Introducción (usa comandos personalizados) ----------
+\begin{frame}{Introducción}
+Presento un resumen de mi día como estudiante de \materia{Mecatrónica}.  
+Autor: \miNombre.
+\end{frame}
+
+% ---------- Frame 4: Tabla simple adicional (clarita) ----------
+\begin{frame}{Material básico}
+\centering
+\begin{tabular}{l|r}
+objeto & Cantidad \\ \hline
+Cuaderno & 2 \\
+Pluma & 3 \\
+Calculadora & 1 \\
+\end{tabular}
+\captionof{ }{ }
+\end{frame}
+
+% ---------- Frame 5: Matemáticas (mínimo contenido académico) ----------
+\begin{frame}{Ejemplo Matemático}
+Sea $X_1, X_2,\ldots,X_n$ i.i.d. con media $\mu$ y varianza $\sigma^2 < \infty$.
+\[
+S_n = \frac{1}{n}\sum_{i=1}^{n} X_i
+\]
+Entonces:
+\[
+\sqrt{n}(S_n - \mu) \xrightarrow{d} \mathcal{N}(0,\sigma^2)
+\]
+\end{frame}
+
+% ---------- Frame 6: Diagrama/Dibujo (Circuito eléctrico simple) ----------
+\begin{frame}{Diagrama eléctrico sencillo}
+\centering
+\begin{circuitikz}
+\draw
+(0,0) to[battery1,l=$V$] (0,2)
+      to[R,l=$R$] (3,2)
+      -- (3,0) -- (0,0);
+\end{circuitikz}
+\end{frame}
+
+\end{document}

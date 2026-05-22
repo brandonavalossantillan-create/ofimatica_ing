@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+
+% --- Idioma y codificación (si usas pdfLaTeX) ---
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% --- Para imágenes ---
+\usepackage{graphicx}
+
+% (Opcional) Para mejorar márgenes
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+\title{Práctica en \LaTeX}
+\author{brandon alexis avalos santillan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introducción}
+es una herramienta utilizada para la elaboración de documentos técnicos y científicos.
+En la ingeniería mecatrónica se usa frecuentemente para reportes, artículos y documentación de proyectos.
+
+\section{¿Por qué usar \LaTeX?}
+Algunas ventajas de \LaTeX\ son:
+\begin{itemize}
+    \item Excelente manejo de ecuaciones.
+    \item Documentos con formato profesional.
+    \item Ideal para trabajos de ingeniería.
+\end{itemize}
+
+\section{Ejemplo de ecuación}
+Una ecuación común en mecatrónica es la segunda ley de Newton:
+\begin{equation}
+    F = m \cdot a
+\end{equation}
+
+Otra ecuación utilizada es la ley de Ohm, la cual relaciona la corriente con el voltaje y la resistencia en un circuito eléctrico:
+\begin{equation}
+    I = \frac{V}{R}
+\end{equation}
+
+Donde $I$ es la corriente eléctrica, $V$ es el voltaje y $R$ es la resistencia.
+Se miden en amperios (A), voltios (V) y ohmios ($\Omega$).
+
+\section{Uso de imágenes}
+Para importar imágenes en \LaTeX, asegúrate de subir el archivo al proyecto de Overleaf.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{i1.jpg}
+    \caption{Imagen 1}
+    \label{fig:imagen1}
+\end{figure}
+
+\section{Conclusión}
+\LaTeX\ es una herramienta poderosa que nos ayuda a presentar nuestros trabajos de forma clara y profesional.
+
+\end{document}
